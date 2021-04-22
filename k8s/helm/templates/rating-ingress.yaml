@@ -1,23 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  {{- if .Values.ingress.annotations }}
+ {{- if .Values.ingress.annotations }}
   annotations:
   {{- range $key, $value := .Values.ingress.annotations }}
     {{ $key }}: {{ $value | quote }}
   {{- end }}
   {{- end }}
   name: {{ .Release.Name }}
-  namespace: {{ .Value.ratings.namespace}}
+  namespace: {{ .Values.ratings.namespace }}
 spec:
   rules:
-  - host: {{ .Value.ingress.host}}
+  - host: {{ .Values.ingress.host }}
     http:
       paths:
-      - path: {{ .Value.ingress.path}}
+      - path: {{ .Values.ingress.path }}
         pathType: Prefix
         backend:
           service:
             name: {{ .Release.Name }}
             port:
-              number: {{ .Value.ratings.port}}
+              number: {{ .Values.ratings.port }}
